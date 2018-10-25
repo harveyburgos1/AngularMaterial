@@ -1,0 +1,47 @@
+<p-dataTable #dt [value]="shipperList" [paginator]="true" [rows]="5" [pageLinks]="5" [responsive]="true"
+[totalRecords]="totalRecords" (onLazyLoad)="paginate($event)" [lazy]="true">   
+ <p-header>
+        <div class="addHeader">
+            <button type="button" pButton icon="fa fa-plus" (click)="addShipper()"></button>
+            &nbsp;Add Shipper
+        </div>
+        <div class="searchHeader">
+            <input pInputText type="text" placeholder="Search Shippers by Shipper Name" [(ngModel)]="searchShipperName">
+            <button pButton type="button" icon="fa fa-search" (click)="searchShipper()"></button>
+        </div>
+    </p-header>
+    <p-column>
+        <ng-template pTemplate type="body" let-Shipper="rowData">
+            <button type="button" pButton icon="fa fa-pencil" (click)="editShipper(Shipper)"></button>
+            <button type="button" pButton icon="fa fa-trash" (click)="deleteShipper(Shipper)"></button>
+        </ng-template>
+    </p-column>
+    <p-column field="shipperID" header="Shipper ID"></p-column>
+    <p-column field="companyName" header="Company Name"></p-column>
+    <p-column field="phone" header="Phone"></p-column>
+  </p-dataTable>
+
+
+  <form [formGroup]="shipperForm">  
+    <p-dialog header="Shipper" [(visible)]="selectShipper" *ngIf="selectShipper" width="1000">
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Company Name</label>
+            <input pInputText id="input-cName" formControlName="companyName" placeholder="Enter Company Name"
+                [(ngModel)]="selectShipper.companyName">
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Phone</label>
+            <input pInputText id="input-phone" formControlName="phone" placeholder="Enter phone"
+                [(ngModel)]="selectShipper.phone">
+            </div>
+
+            <div class="ui-g-12 ui-md-4 ui-fluid " style="margin-left: 30%">
+              <button pButton type="button" icon="fa fa-trash" label="Delete" (click)="okDelete()" *ngIf="isDeleteShipper == true"></button>
+          
+              <button pButton type="button" icon="fa fa-file" label="Save" (click)="saveShipper()" *ngIf="isDeleteShipper == false"></button>
+              <button pButton type="button" icon="fa fa-ban" label="Cancel" (click)="cancelShipper()"></button>
+          </div>
+    </p-dialog>
+    
+  </form>

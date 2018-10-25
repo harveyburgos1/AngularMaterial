@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>a9458695-b19f-4546-9d18-35bfeb4c0938</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.EFCore.Domain.Models\OnlineStore.EFCore.Domain.Models.csproj" />
+    <ProjectReference Include="..\OnlineStore.EFCore.Domain\OnlineStore.EFCore.Domain.csproj" />
+    <ProjectReference Include="..\OnlineStore.EFCore.Infra\OnlineStore.EFCore.Infra.csproj" />
+  </ItemGroup>
+
+</Project>

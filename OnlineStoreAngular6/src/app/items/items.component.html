@@ -1,0 +1,95 @@
+<p-dataTable #dt [value]="itemsList" [paginator]="true" [rows]="5" [pageLinks]="5" [responsive]="true"
+[totalRecords]="totalRecords" (onLazyLoad)="paginate($event)" [lazy]="true">   
+ <p-header>
+        <div class="addHeader">
+            <button type="button" pButton icon="fa fa-plus" (click)="addItem()"></button>
+            &nbsp;Add Item
+        </div>
+        <div class="searchHeader">
+            <input pInputText type="text" placeholder="Search Items by Item Name" [(ngModel)]="searchItemName">
+            <button pButton type="button" icon="fa fa-search" (click)="searchItem()"></button>
+        </div>
+    </p-header>
+    <p-column>
+        <ng-template pTemplate type="body" let-Item="rowData">
+            <button type="button" pButton icon="fa fa-pencil" (click)="editItem(Item)"></button>
+            <button type="button" pButton icon="fa fa-trash" (click)="deleteItem(Item)"></button>
+        </ng-template>
+    </p-column>
+    <p-column field="itemID" header="Item ID"></p-column>
+    <p-column field="name" header="Name"></p-column>
+    <p-column field="type" header="Type"></p-column>
+    <p-column field="description" header="Decription"></p-column>
+    <p-column field="cost" header="Cost"></p-column>
+    <p-column field="cooldown" header="Cooldown"></p-column>
+    <p-column field="isChanneling" header="Is Channeling"></p-column>
+    <p-column field="isDisassemble" header="Is Disassemble"></p-column>
+    <p-column field="isTargetable" header="Is Targetable"></p-column>
+    <p-column field="upgradeLevel" header="Upgrade Level"></p-column>
+  </p-dataTable>
+
+
+  <form [formGroup]="itemsForm">  
+    <p-dialog header="Item" [(visible)]="selectItem" *ngIf="selectItem" width="1000">
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Name</label>
+            <input pInputText id="input-iName" formControlName="name" placeholder="Enter Item's Name"
+                [(ngModel)]="selectItem.name">
+            </div>
+
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Type</label>
+            <input pInputText id="input-type" formControlName="type" placeholder="Enter Type"
+                [(ngModel)]="selectItem.type">
+        </div>
+
+        <div class="ui-g-12 ui-md-12">
+            <label>Description</label>
+            <textarea class="ui-g-12 ui-md-12" pInputTextArea id="input-description" [rows]=5 placeholder="Enter Item Description" style="resize:none"
+                formControlName="description" [(ngModel)]="selectItem.description"></textarea>
+          </div>
+
+          <div class="ui-g-12 ui-md-6">
+            <label>Cost</label>&nbsp;
+            <input pInputText id="input-cost" type="number" formControlName="cost" placeholder="Enter Cost"
+                [(ngModel)]="selectItem.cost">
+            </div>
+
+            <div class="ui-g-12 ui-md-6">
+            <label>Cooldown</label>&nbsp;
+            <input pInputText id="input-cooldown" type="number" formControlName="cooldown" placeholder="Enter Cooldown"
+                [(ngModel)]="selectItem.cooldown">
+</div>
+            <div class="ui-g-12 ui-md-6">
+
+            <label>Is Channeling</label>&nbsp;
+            <p-radioButton name="isChanneling" label="true" formControlName="isChanneling" value="true" [(ngModel)]="selectItem.isChanneling"></p-radioButton>
+            <p-radioButton name="isChanneling" label="false" formControlName="isChanneling" value="false" [(ngModel)]="selectItem.isChanneling"></p-radioButton>
+            </div>
+
+            <div class="ui-g-12 ui-md-6">
+            <label>Is Disassemble</label>&nbsp;
+            <p-radioButton name="isDisassemble" label="true" formControlName="isDisassemble" value="true" [(ngModel)]="selectItem.isDisassemble"></p-radioButton>
+            <p-radioButton name="isDisassemble" label="false" formControlName="isDisassemble" value="false" [(ngModel)]="selectItem.isDisassemble"></p-radioButton>
+            </div>
+
+            <div class="ui-g-12 ui-md-6">
+            <label>Is Targetable</label>&nbsp;
+            <p-radioButton name="isTargetable" label="true" formControlName="isTargetable" value="true" [(ngModel)]="selectItem.isTargetable"></p-radioButton>
+            <p-radioButton name="isTargetable" label="false" formControlName="isTargetable" value="false" [(ngModel)]="selectItem.isTargetable"></p-radioButton>
+            </div>
+            
+            <div class="ui-g-12 ui-md-6">
+            <label>Upgrade Level</label>&nbsp;
+            <input pInputText id="input-upgradeLevel" type="number" formControlName="upgradeLevel" placeholder="Enter Upgrade Level"
+                [(ngModel)]="selectItem.upgradeLevel">
+            </div>
+
+            <div class="ui-g-12 ui-md-12">
+        <button pButton type="button" icon="fa fa-trash" label="Delete" (click)="okDelete()" *ngIf="isDeleteItem == true"></button>
+        <button pButton type="button" icon="fa fa-file" label="Save" (click)="saveItem()" *ngIf="isDeleteItem == false" ></button>
+        <button pButton type="button" icon="fa fa-ban" label="Cancel" (click)="cancelItem()" ></button>
+        </div>
+    </p-dialog>
+    
+  </form>

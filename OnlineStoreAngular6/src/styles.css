@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.centerButtons{
+    text-align: center !important;
+}
+
+.addHeader{
+    float: left !important;
+}
+
+.searchHeader{
+    text-align: right !important;
+}

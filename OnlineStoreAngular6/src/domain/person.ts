@@ -1,0 +1,24 @@
+export interface Person{
+    personID:string;
+    firstName:string;
+    middleName:string;
+    lastName:string;
+    age:number;
+    birthday:any;
+    photo;
+    gender:string;
+    relationshipStatus:string;
+    nationality:string;
+    phoneNumber:string;
+    religion:string;
+    street:string;
+    barangay:string;
+    city:string;
+    country:string;
+    region:string;
+    postalCode:number;
+    latitude:number;
+    longtitude:number;
+    fullName:string;
+    address:string;
+}

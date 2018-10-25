@@ -1,0 +1,105 @@
+<div style="float:left; margin-top:1.5%;">
+  <button mat-flat-button style="background-color:#343a40; color:white;" (click)="addTraining()">Add New Training</button>
+</div>
+
+<div style="float:right;margin-right: 4%">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Training">
+  </mat-form-field>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="margin:0.5% 0% 0% 0%; table-layout: auto; width: 100%">
+
+
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef> Description </th>
+    <td mat-cell *matCellDef="let training"> {{training.description}} </td>
+
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> Price </th>
+    <td mat-cell *matCellDef="let training"> {{training.price}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isActive">
+    <th mat-header-cell *matHeaderCellDef> Is Active</th>
+    <td mat-cell *matCellDef="let training"> {{training.isActive}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dateCreated">
+    <th mat-header-cell *matHeaderCellDef> Date Created </th>
+    <td mat-cell *matCellDef="let training"> {{training.dateCreated}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <button mat-button (click)="editTraining(row)">
+        <i class="material-icons" style="color:#343a40">edit</i>
+      </button>
+      <button mat-button (click)="displayDeleteTraining(row)">
+        <i class="material-icons" style="color:#343a40">delete</i>
+
+      </button>
+    </mat-cell>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+
+
+
+<mat-horizontal-stepper linear #stepper *ngIf="selectTraining" class="mat-elevation-z8">
+  <mat-step>
+    <form [formGroup]="TrainingFormGroup">
+      <ng-template matStepLabel style="text-align: center;
+      ">Fill out your Training Information</ng-template>
+
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field style="width:100%;">
+            <textarea matInput placeholder="Description" formControlName="description" [(ngModel)]="selectTraining.description"
+              [rows]="3" style="resize:none;"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <mat-form-field>
+            <input matInput type="number" placeholder="Price" formControlName="price" [(ngModel)]="selectTraining.price"
+              min="0" step=".01" required>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3" >
+          <mat-label>Is Active </mat-label>
+          <mat-radio-group [(ngModel)]="selectTraining.isActive" style="margin-left:2%;" formControlName="isActive">
+            <mat-radio-button [value]="true">True</mat-radio-button>
+            <mat-radio-button [value]="false">False</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field>
+            <input matInput [matDatepicker]="dateCreated" formControlName="dateCreated" [(ngModel)]="selectTraining.dateCreated"
+              placeholder="Date Created" readonly [min]="minDate">
+            <mat-datepicker-toggle matSuffix [for]="dateCreated"></mat-datepicker-toggle>
+            <mat-datepicker #dateCreated></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="centerButtons">
+        <button mat-raised-button (click)="saveTraining()" *ngIf="isDeleteTraining==false">Save</button>
+        <button mat-raised-button (click)="deleteTraining()" *ngIf="isDeleteTraining==true">Delete</button>
+        <button mat-raised-button (click)="cancelTraining()">Cancel</button>
+      </div>
+
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

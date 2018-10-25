@@ -1,0 +1,121 @@
+<p-dataTable [value]="orderList">
+  <p-header>
+    <div class="addHeader">
+      <button type="button" pButton icon="fa fa-plus" (click)="addOrder()"></button>
+      &nbsp; Add Order
+    </div>
+    <div class="searchHeader">
+      <input pInputText type="text" placeholder="Search Order by Order Name" [(ngModel)]="searchOrderName">
+      <button pButton type="button" icon="fa fa-search" (click)="searchOrder()"></button>
+    </div>
+  </p-header>
+  <p-column>
+    <ng-template pTemplate type="body" let-Order="rowData">
+      <button type="button" pButton icon="fa fa-pencil" (click)="editOrder(Order)"></button>
+      <button type="button" pButton icon="fa fa-trash" (click)="deleteOrder(Order)"></button>
+    </ng-template>
+  </p-column>
+  <p-column field="customerName" header="Customer Name"></p-column>
+  <p-column field="employeeName" header="Employee Name"></p-column>
+  <p-column field="shipViaName" header="Shipper"></p-column>
+  <p-column field="shippedDate" header="Shipped Date"></p-column>
+  <p-column header="Shipping Address">
+    <ng-template pTemplate type="body" let-Order="rowData">
+      {{ Order.shipCity + " " +Order.shipRegion + " " + Order.shipPostalCode + " " + Order.shipCountry}}
+    </ng-template>
+  </p-column>
+</p-dataTable>
+
+
+<mat-horizontal-stepper linear #stepper *ngIf="selectOrder"> 
+  <mat-step>
+    <form [formGroup]="orderFormGroup">
+      <ng-template matStepLabel>Fill out your Basic Information</ng-template>
+      <mat-form-field>
+        <input type="text" formControlName="shipName" [(ngModel)]="selectOrder.shipName" placeholder="Enter Ship Name"
+          matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" formControlName="shipAddress" [(ngModel)]="selectOrder.shipAddress" placeholder="Enter Ship Address"
+          matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" formControlName="shipCity" [(ngModel)]="selectOrder.shipCity" placeholder="Enter city"
+          matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" formControlName="shipRegion" [(ngModel)]="selectOrder.shipRegion" placeholder="Enter Region"
+          matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" formControlName="shipPostalCode" [(ngModel)]="selectOrder.shipPostalCode" placeholder="Enter Postal Code"
+          matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" formControlName="shipCountry" [(ngModel)]="selectOrder.shipCountry" placeholder="Enter Country"
+          matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="number" formControlName="freight" [(ngModel)]="selectOrder.freight" placeholder="Enter freight"
+          matInput>
+      </mat-form-field>
+      <mat-form-field>
+          <input matInput [matDatepicker]="orderDate" placeholder="Enter Order Date" 
+            [(ngModel)]="selectOrder.orderDate" formControlName="orderDate"> 
+          <mat-datepicker-toggle matSuffix [for]="orderDate"></mat-datepicker-toggle>
+          <mat-datepicker #orderDate></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+          <input matInput [matDatepicker]="requiredDate" placeholder="Enter Required Date" 
+            [(ngModel)]="selectOrder.requiredDate" formControlName="requiredDate"> 
+          <mat-datepicker-toggle matSuffix [for]="requiredDate"></mat-datepicker-toggle>
+          <mat-datepicker #requiredDate></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+          <input matInput [matDatepicker]="shippedDate" placeholder="Enter Shipped Date" 
+            [(ngModel)]="selectOrder.shippedDate" formControlName="shippedDate"> 
+          <mat-datepicker-toggle matSuffix [for]="shippedDate"></mat-datepicker-toggle>
+          <mat-datepicker #shippedDate></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+          <mat-select placeholder="Select Customer" formControlName="customerName" [(ngModel)]="selectCustomer">
+            <mat-option *ngFor="let customer of customerList" [value]="customer.customerID">
+              {{customer.companyName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field>
+            <mat-select placeholder="Select Employee" formControlName="firstName" 
+            [(ngModel)]="selectEmployee">
+              <mat-option *ngFor="let employee of employeeList" [value]="employee.employeeID">
+                {{employee.firstName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+              <mat-select placeholder="Select Shipper" formControlName="companyName" [(ngModel)]="selectShipper">
+                <mat-option *ngFor="let shipper of shipperList" [value]="shipper.shipperID">
+                  {{shipper.companyName}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+          
+            <div class="centerButtons">
+                <button mat-raised-button matStepperNext>Next</button>
+                <button mat-raised-button (click)="saveOrder($event)" *ngIf="isDeleteOrder==false">Save</button>
+                <button mat-raised-button (click)="cancelOrder()">Cancel</button>
+              </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <app-order-detail [orderDetailFormGroup]="orderDetailFormGroup"  [orderID]="selectOrder.orderID"
+    ></app-order-detail>
+     <!-- [saveEvent]="" -->
+     </mat-step>
+    </mat-horizontal-stepper>

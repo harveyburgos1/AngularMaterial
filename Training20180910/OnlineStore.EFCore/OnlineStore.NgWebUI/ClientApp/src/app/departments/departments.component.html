@@ -1,0 +1,22 @@
+<h1>Departments List</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!departments"><em>Loading...</em></p>
+
+<table class='table' *ngIf="departments">
+  <thead>
+    <tr>
+      <th>Department ID</th>
+      <th>Name</th>
+      <th>Active</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let dep of departments">
+      <td>{{ dep.departmentID }}</td>
+      <td>{{ dep.departmentName }}</td>
+      <td>{{ dep.isActive }}</td>
+    </tr>
+  </tbody>
+</table>

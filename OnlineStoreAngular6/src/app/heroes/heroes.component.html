@@ -1,0 +1,90 @@
+<p-dataTable #dt [value]="heroesList" [paginator]="true" [rows]="5" [pageLinks]="5" [responsive]="true" [totalRecords]="totalRecords"
+    (onLazyLoad)="paginate($event)" [lazy]="true">
+    <p-header>
+        <div class="addHeader">
+            <button type="button" pButton icon="fa fa-plus" (click)="addHero()"></button>
+            &nbsp;Add Hero
+        </div>
+        <div class="searchHeader">
+            <input pInputText type="text" placeholder="Search Heroes by Heroes Name" [(ngModel)]="searchHeroName">
+            <button pButton type="button" icon="fa fa-search" (click)="searchHero()"></button>
+        </div>
+    </p-header>
+    <p-column>
+        <ng-template pTemplate type="body" let-Hero="rowData">
+            <button type="button" pButton icon="fa fa-pencil" (click)="editHero(Hero)"></button>
+            <button type="button" pButton icon="fa fa-trash" (click)="deleteHero(Hero)"></button>
+        </ng-template>
+    </p-column>
+    <p-column field="heroID" header="Hero ID"></p-column>
+    <p-column field="name" header="Name"></p-column>
+    <p-column field="attribute" header="Attribute"></p-column>
+    <p-column field="hit" header="Hit Points"></p-column>
+    <p-column field="mana" header="Mana Points"></p-column>
+    <p-column field="damage" header="Damage"></p-column>
+    <p-column field="armor" header="Armor"></p-column>
+    <p-column field="description" header="Description"></p-column>
+    <p-column field="isMelee" header="Is Melee"></p-column>
+    <p-column field="aghanimsEffect" header="Aghanims Effect"></p-column>
+</p-dataTable>
+
+<form [formGroup]="heroesForm">
+    <p-dialog header="Hero" [(visible)]="selectHero" *ngIf="selectHero" width="1000">
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Name</label>
+            <input pInputText id="input-hName" formControlName="name" placeholder="Enter Name" [(ngModel)]="selectHero.name">
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Attribute</label>
+            <input pInputText id="input-attribute" formControlName="attribute" placeholder="Enter Attribute"
+                [(ngModel)]="selectHero.attribute">
+        </div>
+
+        <div class="ui-g-12 ui-md-2 ui-fluid">
+            <label>Hit Points</label>
+            <input pInputText id="input-hit" formControlName="hit" type="number" placeholder="Enter Hit Points" [(ngModel)]="selectHero.hit">
+        </div>
+        <div class="ui-g-12 ui-md-2 ui-fluid">
+            <label>Mana Points</label>
+            <input pInputText id="input-mana" formControlName="mana" type="number" placeholder="Enter Mana Points" [(ngModel)]="selectHero.mana">
+        </div>
+
+        <div class="ui-g-12 ui-md-2 ui-fluid">
+            <label>Damage</label>
+            <input pInputText id="input-damage" formControlName="damage" type="number" placeholder="Enter Damage" [(ngModel)]="selectHero.damage">
+        </div>
+
+        <div class="ui-g-12 ui-md-2 ui-fluid">
+            <label>Armor</label>
+            <input pInputText id="input-armor" formControlName="armor" type="number" placeholder="Enter Armor" [(ngModel)]="selectHero.armor">
+        </div>
+
+        <div class="ui-g-12 ui-md-1 ui-fluid">
+            <label>Is Melee</label>
+            <p-radioButton name="isMelee" label="true" formControlName="isMelee" value="true" [(ngModel)]="selectHero.isMelee"></p-radioButton>
+            <p-radioButton name="isMelee" label="false" formControlName="isMelee" value="false" [(ngModel)]="selectHero.isMelee"></p-radioButton>
+        </div>
+
+        <div class="ui-g-12 ui-md-3 ui-fluid">
+            <label>Aghanims Effect</label>
+            <input pInputText id="input-aghanimsEffect" formControlName="aghanimsEffect" placeholder="Enter Aghanims Effect">
+        </div>
+
+        <div class="ui-g-12 ui-lg-12 ui-fluid">
+            <label>Description</label><br>
+            <textarea  class="ui-g-12 ui-md-12" pInputTextArea id="input-description" [rows]=5 placeholder="Enter Hero Description" style="resize:none"
+                formControlName="description" [(ngModel)]="selectHero.description"></textarea>
+        </div>
+
+
+
+
+        <div class="ui-g-12 ui-md-4 ui-fluid " style="margin-left: 30%">
+            <button pButton type="button" icon="fa fa-trash" label="Delete" (click)="okDelete()" *ngIf="isDeleteHero == true"></button>
+        
+            <button pButton type="button" icon="fa fa-file" label="Save" (click)="saveHero()" *ngIf="isDeleteHero == false"></button>
+            <button pButton type="button" icon="fa fa-ban" label="Cancel" (click)="cancelHero()"></button>
+        </div>
+    </p-dialog>
+
+</form>

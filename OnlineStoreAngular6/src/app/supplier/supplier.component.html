@@ -1,0 +1,89 @@
+
+<p-dataTable [value]="supplierList" [paginator]="true" [rows]="10" [pageLinks]="5" [responsive]="true"
+[totalRecords]="totalRecords" (onLazyLoad)="paginate($event)" [lazy]="true">
+  <p-header>
+    <div class="addHeader">
+      <button type="button" pButton icon="fa fa-plus" (click)="addSupplier()"></button>
+      &nbsp; Add Supplier
+    </div>
+    <div class="searchHeader">
+        <input pInputText type="text" placeholder="Search Supplier by Supplier Name"[(ngModel)]="searchSupplierName">
+        <button pButton type="button" icon="fa fa-search" (click)="searchSupplier()"></button>
+    </div>
+  </p-header>
+  <p-column>
+    <ng-template pTemplate type="body" let-Supplier="rowData">
+      <button type="button" pButton icon="fa fa-pencil" (click)="editSupplier(Supplier)"></button>
+      <button type="button" pButton icon="fa fa-trash" (click)="deleteSupplier(Supplier)"></button>
+    </ng-template>
+  </p-column>
+  <p-column field="supplierID" header="Supplier ID"></p-column>
+  <p-column field="companyName" header="Company Name"></p-column>
+  <p-column field="contactName" header="Contact Name"></p-column>
+  <p-column field="contactTitle" header="Contact Title"></p-column>
+  <p-column field="address" header="Address"></p-column>
+  <p-column field="city" header="City"></p-column>
+  <p-column field="region" header="Region"></p-column>
+  <p-column field="postalCode" header="Postal Code"></p-column>
+  <p-column field="country" header="Country"></p-column>
+  <p-column field="phone" header="Phone"></p-column>
+  <p-column field="fax" header="Fax"></p-column>
+  <p-column field="homePage" header="Home Page"></p-column>
+</p-dataTable>
+
+
+<form [formGroup]="supplierForm">
+  
+  <p-dialog header="Supplier" [(visible)]="selectSupplier" *ngIf="selectSupplier">
+    <div class="ui-g-12 ui-md-12 ui-fluid">
+      <label>Company Name</label>
+      <input pInputText id="input-companyName" formControlName="companyName" placeholder="Enter your company name" [(ngModel)]="selectSupplier.companyName">
+      <br/>
+
+      <label>Contact Name</label>
+      <input pInputText id="input-contactName" formControlName="contactName" placeholder="Enter your contact name" [(ngModel)]="selectSupplier.contactName">
+      <br/>
+
+      <label>Title</label>
+      <input pInputText id="input-contactTitle" formControlName="contactTitle" placeholder="Enter Contact Title" [(ngModel)]="selectSupplier.contactTitle">
+      <br/>
+
+      <label>Address</label>
+      <input pInputText id="input-address" formControlName="address" placeholder="Enter Address" [(ngModel)]="selectSupplier.address">
+      <br/>
+
+      <label>City</label>
+      <input pInputText id="input-city" formControlName="city" placeholder="Enter City" [(ngModel)]="selectSupplier.city">
+      <br/>
+
+      <label>Region</label>
+      <input pInputText id="input-region" formControlName="region" placeholder="Enter Region" [(ngModel)]="selectSupplier.region">
+      <br/>
+
+      <label>Postal Code</label>
+      <input pInputText id="input-postalCode" formControlName="postalCode" placeholder="Enter Postal Code" [(ngModel)]="selectSupplier.postalCode">
+      <br/>
+
+      <label>Country</label>
+      <input pInputText id="input-country" formControlName="country" placeholder="Enter Country" [(ngModel)]="selectSupplier.country">
+      <br/>
+
+      <label>Home Phone</label>
+      <input pInputText id="input-homePhone" formControlName="phone" placeholder="Enter Home Phone" [(ngModel)]="selectSupplier.phone">
+      <br/>
+
+      <label>Photos</label>
+      <input pInputText id="input-fax" formControlName="fax" placeholder="Enter Fax" [(ngModel)]="selectSupplier.fax">
+      <br/>
+
+      <label>Notes</label>
+      <input pInputText id="input-homePage" formControlName="homePage" placeholder="Enter HomePage" [(ngModel)]="selectSupplier.homePage">
+      <br/>
+
+    </div>
+
+      <button pButton type="button" icon="fa fa-trash" label="Delete" (click)="okDeleteSupplier()" *ngIf="isDeleteSupplier == true"></button>
+      <button pButton type="button" icon="fa fa-file" label="Save" (click)="saveSupplier()" *ngIf="isDeleteSupplier == false" [disabled]="!supplierForm.valid"></button>
+      <button pButton type="button" icon="fa fa-ban" label="Cancel" (click)="cancelSupplier()"></button>
+    </p-dialog>
+  </form>

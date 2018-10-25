@@ -1,0 +1,43 @@
+<p-dataTable #dt [value]="categoryList" [paginator]="true" [rows]="5" [pageLinks]="5" [responsive]="true"
+    [totalRecords]="totalRecords" (onLazyLoad)="paginate($event)" [lazy]="true">
+    <p-header>
+        <div class="addHeader">
+            <button type="button" pButton icon="fa fa-plus" (click)="addCategory()"></button>
+            &nbsp;Add Category
+        </div>
+
+        <div class="searchHeader">
+            <input pInputText type="text" placeholder="Search Category by Category Name"[(ngModel)]="searchCategoryName">
+            <button pButton type="button" icon="fa fa-search" (click)="searchCategory()"></button>
+        </div>
+    </p-header>
+    <p-column>
+        <ng-template pTemplate type="body" let-Category="rowData">
+            <button type="button" pButton icon="fa fa-pencil" (click)="editCategory(Category)"></button>
+            <button type="button" pButton icon="fa fa-trash" (click)="deleteCategory(Category)"></button>
+        </ng-template>
+    </p-column>
+    <p-column field="categoryID" header="Category ID"></p-column>
+    <p-column field="categoryName" header="Category Name"></p-column>
+    <p-column field="description" header="Description"></p-column>
+</p-dataTable>
+
+
+<form [formGroup]="categoryForm">
+
+    <p-dialog header="Category" [(visible)]="selectCategory" *ngIf="selectCategory">
+        <div class="ui-g-12 ui-md-12 ui-fluid">
+            <label>Category Name</label>
+            <input pInputText id="input-cName" formControlName="categoryName" placeholder="Enter Category Name"
+                [(ngModel)]="selectCategory.categoryName">
+            <br />
+        <label>Description</label>
+        <textarea pInputTextArea id="input-description" [rows]=5 placeholder="Enter Category Description" style="resize:none"
+            formControlName="description" [(ngModel)]="selectCategory.description"></textarea>
+        <br />
+    </div>
+        <button pButton type="button" icon="fa fa-trash" label="Delete" (click)="okDelete()" *ngIf="isDeleteCategory == true"></button>
+        <button pButton type="button" icon="fa fa-file" label="Save" (click)="saveCategory()" *ngIf="isDeleteCategory == false" [disabled]="!categoryForm.valid"></button>
+        <button pButton type="button" icon="fa fa-ban" label="Cancel" (click)="cancelCategory()" ></button>
+    </p-dialog>
+</form>

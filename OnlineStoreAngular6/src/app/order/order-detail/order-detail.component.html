@@ -1,0 +1,30 @@
+<form [formGroup]="orderDetailFormGroup">
+  
+  <mat-form-field>
+      <mat-select placeholder="Select Product" formControlName="productName"
+      [(ngModel)]="selectProduct">
+      <mat-option *ngFor="let product of productList" [value]="product.productID">
+      {{product.productName}}
+      </mat-option>
+      </mat-select>
+      </mat-form-field>
+  <mat-form-field>
+      <input type="number" formControlName="orderLineID" [(ngModel)]="selectOrderDetail.orderLineID" placeholder="Enter Order Line ID" matInput>
+    </mat-form-field>
+  <mat-form-field>
+  <input type="number" formControlName="unitPrice" [(ngModel)]="selectOrderDetail.unitPrice" placeholder="Enter Unit Price" matInput>
+  </mat-form-field>
+  <mat-form-field>
+  <input type="number" formControlName="quantity" [(ngModel)]="selectOrderDetail.quantity" placeholder="Enter Quantity" matInput>
+  </mat-form-field>
+  <mat-form-field>
+  <input type="number" formControlName="discount" [(ngModel)]="selectOrderDetail.discount" placeholder="Enter Discount" matInput>
+  </mat-form-field>
+
+  <div class="centerButtons">
+    <button mat-raised-button matStepperPrevious>Back</button>
+     <button mat-raised-button (click)="callingSaveEvent()" *ngIf="isDeleteOrder==false">Save</button>
+
+  </div>      
+
+</form>

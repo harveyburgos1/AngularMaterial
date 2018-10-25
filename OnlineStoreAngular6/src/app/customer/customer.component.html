@@ -1,0 +1,73 @@
+<p-dataTable [value]="customerList" [paginator]="true" [rows]="10" [pageLinks]="5" [responsive]="true"
+  [totalRecords]="totalRecords" (onLazyLoad)="paginate($event)" [lazy]="true">
+  <p-header>
+    <div class="addHeader">
+      <button type="button" pButton icon="fa fa-plus" (click)="addCustomer()"></button>
+      &nbsp; Add Customer
+    </div>
+    <div class="searchHeader">
+        <input pInputText type="text" placeholder="Search Customer by Customer Name"[(ngModel)]="searchCustomerName">
+        <button pButton type="button" icon="fa fa-search" (click)="searchCustomer()"></button>
+    </div>
+  </p-header>
+  <p-column>
+    <ng-template pTemplate type="body" let-Customer="rowData">
+      <button type="button" pButton icon="fa fa-pencil" (click)="editCustomer(Customer)"></button>
+      <button type="button" pButton icon="fa fa-trash" (click)="deleteCustomer(Customer)"></button>
+    </ng-template>
+  </p-column>
+  <p-column field="customerID" header="Customer ID"></p-column>
+  <p-column field="companyName" header="Company Name"></p-column>
+  <p-column field="contactName" header="Contact Name"></p-column>
+  <p-column field="contactTitle" header="Contact Title"></p-column>
+  <p-column field="address" header="Address"></p-column>
+  <p-column field="city" header="City"></p-column>
+  <p-column field="region" header="Region"></p-column>
+  <p-column field="postalCode" header="Postal Code"></p-column>
+  <p-column field="country" header="Country"></p-column>
+  <p-column field="phone" header="Phone"></p-column>
+  <p-column field="fax" header="Fax"></p-column>
+</p-dataTable>
+
+<form [formGroup]="customerForm">
+  <p-dialog header="Customer" [(visible)]="selectCustomer" *ngIf="selectCustomer">
+    <div class="ui-sm-12 ui-md-12 ui-fluid">
+      <label>Company Name</label>
+      <input pInputText id="input-companyName" formControlName="companyName" placeholder="Enter Company Name"
+        [(ngModel)]="selectCustomer.companyName">
+      <br />
+    <label>Contact Name</label>
+    <input pInputText id="input-contactName" formControlName="contactName" placeholder="Enter Contact Name" [(ngModel)]="selectCustomer.contactName">
+    <br />
+    <label>Contact Title</label>
+    <input pInputText id="input-contactTitle" formControlName="contactTitle" placeholder="Enter Contact Title"
+      [(ngModel)]="selectCustomer.contactTitle">
+    <br />
+    <label>Address</label>
+    <input pInputText id="input-address" formControlName="address" placeholder="Enter Address" [(ngModel)]="selectCustomer.address">
+    <br />
+    <label>City</label>
+    <input pInputText id="input-city" formControlName="city" placeholder="Enter City" [(ngModel)]="selectCustomer.city">
+    <br />
+    <label>Region</label>
+    <input pInputText id="input-region" formControlName="region" placeholder="Enter Region" [(ngModel)]="selectCustomer.region">
+    <br />
+    <label>Postal Code</label>
+    <input pInputText id="input-postalCode" formControlName="postalCode" placeholder="Enter Postal Code" [(ngModel)]="selectCustomer.postalCode">
+    <br />
+    <label>Country</label>
+    <input pInputText id="input-country" formControlName="country" placeholder="Enter Country" [(ngModel)]="selectCustomer.country">
+    <br />
+    <label>Phone</label>
+    <input pInputText id="input-phone" formControlName="phone" placeholder="Enter Phone" [(ngModel)]="selectCustomer.phone">
+    <br />
+    <label>Fax</label>
+    <input pInputText id="input-fax" formControlName="fax" placeholder="Enter Fax" [(ngModel)]="selectCustomer.fax">
+    <br />
+  </div>
+
+    <button pButton type="button" icon="fa fa-trash" label="Delete" (click)="okDeleteCustomer()" *ngIf="isDeleteCustomer == true"></button>
+    <button pButton type="button" icon="fa fa-file" label="Save" (click)="saveCustomer()" *ngIf="isDeleteCustomer == false" [disabled]="!customerForm.valid"></button>
+    <button pButton type="button" icon="fa fa-ban" label="Cancel" (click)="cancelCustomer()"></button>
+  </p-dialog>
+</form>
